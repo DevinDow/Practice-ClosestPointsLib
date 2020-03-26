@@ -24,6 +24,16 @@ namespace ClosestPointsLib.Tests
 
 
         [TestMethod()]
+        public void DistanceTest()
+        {
+            Assert.AreEqual(0, ClosestPoints.Point.GetDistance(new int[] { 0, 0 }));
+            Assert.AreEqual(1, ClosestPoints.Point.GetDistance(new int[] { 1, 0 }));
+            Assert.AreEqual(1, ClosestPoints.Point.GetDistance(new int[] { 0, 1 }));
+            Assert.AreEqual(1, ClosestPoints.Point.GetDistance(new int[] { -1, 0 }));
+            Assert.AreEqual(1, ClosestPoints.Point.GetDistance(new int[] { 0, -1 }));
+        }
+
+        [TestMethod()]
         public void FindClosestPointTest()
         {
             var points = new int[][] { new int[] { 1, 1 }, new int[] { 2, 2 }, new int[] { 3, 3 } };

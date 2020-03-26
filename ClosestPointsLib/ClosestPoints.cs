@@ -35,7 +35,7 @@ namespace ClosestPointsLib
 
 
         // Point class
-        private class Point
+        public class Point
         {
             // Public Static Methods
             public static double GetDistance(int[] coords)
