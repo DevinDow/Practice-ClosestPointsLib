@@ -26,11 +26,38 @@ namespace ClosestPointsLib
                 throw new Exception("k is less than 1.");
             }
 
-            // sort points by distance
-            IEnumerable<int[]> sortedPoints = points.OrderBy(point => Point.GetDistance(point));
+            // Using sort is clean & pretty code, but O(n log n) so performance could be better for large number of Points
+            // return points.OrderBy(point => Point.GetDistance(point)).Take(k).ToArray(); // sort points by distance, take first k Points
 
-            // return first k closest points
-            return sortedPoints.Take(k).ToArray();
+            // go through the Points only once keeping the k closest = O(n log k)
+            var closestPoints = new SortedList<double, Point>(k, new DistanceComparer());
+            foreach (int[] p in points)
+            {
+                Point point = new Point(p);
+
+                // add the first k points
+                if (closestPoints.Count < k)
+                {
+                    closestPoints.Add(point.Distance, point);
+                    continue;
+                }
+
+                // if point's distance is closer than the worst of closestPoints than replace the worst with point
+                if (point.Distance < closestPoints.Keys.Max())
+                {
+                    closestPoints.RemoveAt(k - 1);
+                    closestPoints.Add(point.Distance, point);
+                }
+            }
+
+            // return array of closest points (type int[])
+            var closestPointsArray = new int[k][];
+            int i = 0;
+            foreach (Point point in closestPoints.Values)
+            {
+                closestPointsArray[i++] = point.Coords;
+            }
+            return closestPointsArray;
         }
 
 
@@ -84,6 +111,19 @@ namespace ClosestPointsLib
 
                 // Pythagorean's Theorem: A^2 + B^2 = C^2
                 return Math.Sqrt(Math.Pow(coords[0], 2) + Math.Pow(coords[1], 2));
+            }
+        }
+
+
+        // To allow SortedList to store multiple Points with the same distance, we need a Comparer that never returns 0 (equal)
+        private class DistanceComparer : IComparer<double>
+        {
+            public int Compare(double d1, double d2)
+            {
+                if (d1 < d2)
+                    return -1;
+                else
+                    return 1;
             }
         }
     }
