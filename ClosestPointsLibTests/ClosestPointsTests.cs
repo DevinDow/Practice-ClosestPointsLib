@@ -3,6 +3,7 @@ using ClosestPointsLib;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace ClosestPointsLib.Tests
 {
@@ -11,15 +12,30 @@ namespace ClosestPointsLib.Tests
     {
         private void compareArrays(int[][] expected, int[][] actual)
         {
-            Assert.AreEqual(expected.Length, actual.Length, "arrays are not the same length");
-            for (int i = 0; i < expected.Length; i++)
-            {
-                for (int j = 0; j < expected[i].Length; j++)
-                {
-                    Assert.AreEqual(expected[i][j], actual[i][j], string.Format("coord %d of point %d are not the same", j, i));
-                }
-            }
+            Assert.AreEqual(expected.Length, actual.Length, "expected & actual should have the same number of points");
 
+
+            // Results can be in any order.  Sorting them then comparing them would work.
+            var expectedSorted = expected.OrderBy(point => point[0]).ThenBy(point => point[1]);
+            var actualSorted = actual.OrderBy(point => point[0]).ThenBy(point => point[1]);
+            
+            for (int i = 0; i < expectedSorted.Count(); i++)
+            {
+                var expectedPoint = expectedSorted.ElementAt(i);
+                var actualPoint = actualSorted.ElementAt(i);
+                Assert.IsTrue(arePointsEqual(expectedPoint, actualPoint), "expected & actual points are not equal");
+            }
+        }
+
+        private bool arePointsEqual(int[] p1, int[] p2)
+        {
+            Assert.AreEqual(p1.Length, p2.Length, "expected & actual points have different number of dimensions");
+            for (int i = 0; i < p1.Length; i++)
+            {
+                if (p1[i] != p2[i])
+                    return false;
+            }
+            return true;
         }
 
 
