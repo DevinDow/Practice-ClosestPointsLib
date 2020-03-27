@@ -37,6 +37,45 @@ namespace ClosestPointsLib
         // Point class
         public class Point
         {
+            // Private Fields
+            private int[] coords = new int[2];
+            private double? distance = null;
+
+
+            // Public Properties
+            public int X { get { return coords[0]; } set { coords[0] = value; } }
+            public int Y { get { return coords[1]; } set { coords[1] = value; } }
+
+            public int[] Coords { get { return (int[])coords.Clone(); } }
+
+            public double Distance
+            {
+                get
+                {
+                    // Using a nullable so we only calculate this once for each Point object
+                    if (!distance.HasValue)
+                    {
+                        distance = GetDistance(coords);
+                    }
+                    return distance.Value;
+                }
+            }
+
+
+            // Constructor
+            public Point(int x, int y)
+            {
+                X = x;
+                Y = y;
+            }
+
+            public Point(int[] coords)
+            {
+                X = coords[0];
+                Y = coords[1];
+            }
+
+
             // Public Static Methods
             public static double GetDistance(int[] coords)
             {
