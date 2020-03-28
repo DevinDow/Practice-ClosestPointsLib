@@ -42,11 +42,11 @@ namespace ClosestPointsLib.Tests
         [TestMethod()]
         public void DistanceTest()
         {
-            Assert.AreEqual(0, ClosestPoints.Point.GetDistance(new int[] { 0, 0 }));
-            Assert.AreEqual(1, ClosestPoints.Point.GetDistance(new int[] { 1, 0 }));
-            Assert.AreEqual(1, ClosestPoints.Point.GetDistance(new int[] { 0, 1 }));
-            Assert.AreEqual(1, ClosestPoints.Point.GetDistance(new int[] { -1, 0 }));
-            Assert.AreEqual(1, ClosestPoints.Point.GetDistance(new int[] { 0, -1 }));
+            Assert.AreEqual(0, ClosestPointsToOrigin.Point.GetDistance(new int[] { 0, 0 }));
+            Assert.AreEqual(1, ClosestPointsToOrigin.Point.GetDistance(new int[] { 1, 0 }));
+            Assert.AreEqual(1, ClosestPointsToOrigin.Point.GetDistance(new int[] { 0, 1 }));
+            Assert.AreEqual(1, ClosestPointsToOrigin.Point.GetDistance(new int[] { -1, 0 }));
+            Assert.AreEqual(1, ClosestPointsToOrigin.Point.GetDistance(new int[] { 0, -1 }));
         }
 
         [TestMethod()]
@@ -55,7 +55,7 @@ namespace ClosestPointsLib.Tests
             var points = new int[][] { new int[] { 1, 1 }, new int[] { 2, 2 }, new int[] { 3, 3 } };
             int k = 1;
             var expected = new int[][] { new int[] { 1, 1 } };
-            var actual = ClosestPoints.FindClosestPoints(points, k);
+            var actual = ClosestPointsToOrigin.FindClosestPoints(points, k);
             compareArrays(expected, actual);
         }
 
@@ -65,7 +65,7 @@ namespace ClosestPointsLib.Tests
             var points = new int[][] { new int[] { 1, 1 }, new int[] { 2, 2 }, new int[] { 3, 3 } };
             int k = 2;
             var expected = new int[][] { new int[] { 1, 1 }, new int[] { 2, 2 } };
-            var actual = ClosestPoints.FindClosestPoints(points, k);
+            var actual = ClosestPointsToOrigin.FindClosestPoints(points, k);
             compareArrays(expected, actual);
         }
 
@@ -75,7 +75,7 @@ namespace ClosestPointsLib.Tests
             var points = new int[][] { new int[] { 3, 3 }, new int[] { 2, 2 }, new int[] { 1, 1 } };
             int k = 2;
             var expected = new int[][] { new int[] { 1, 1 }, new int[] { 2, 2 } };
-            var actual = ClosestPoints.FindClosestPoints(points, k);
+            var actual = ClosestPointsToOrigin.FindClosestPoints(points, k);
             compareArrays(expected, actual);
         }
 
@@ -85,7 +85,7 @@ namespace ClosestPointsLib.Tests
             var points = new int[][] { new int[] { 2, 3 }, new int[] { 1, 0 }, new int[] { 0, 1 }, new int[] { 1, 1 } };
             int k = 2;
             var expected = new int[][] { new int[] { 1, 0 }, new int[] { 0, 1 } };
-            var actual = ClosestPoints.FindClosestPoints(points, k);
+            var actual = ClosestPointsToOrigin.FindClosestPoints(points, k);
             compareArrays(expected, actual);
         }
     }

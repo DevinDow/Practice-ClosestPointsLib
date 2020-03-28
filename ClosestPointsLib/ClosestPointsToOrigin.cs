@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ClosestPointsLib
 {
-    public class ClosestPoints
+    public class ClosestPointsToOrigin
     {
         /// <summary>
         /// Find k points closest to the origin (0,0)
